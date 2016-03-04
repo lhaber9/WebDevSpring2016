@@ -1,0 +1,30 @@
+<h1 class="page-header">Forms</h1>
+<ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a href="#/forms">Forms</a></li>
+    <li role="presentation"><a>Fields</a></li>
+</ul>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th><i class="fa fa-fw fa-sort-desc"></i>Form Name</th>
+            <th><i class="fa fa-fw fa-sort-desc"></i>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input ng-model="newFormName" type="text" name="name" id="name" placeholder="name"></td>
+            <td>
+                <span ng-click="addForm()" class="glyphicon glyphicon-plus fa-2x"></span>
+                <span ng-click="updateForm()" class="glyphicon glyphicon-ok fa-2x"></span>
+            </td>
+        </tr>
+        <tr ng-repeat="form in forms">
+            <td>{{form.title}}</td>
+            <td>
+                <span ng-click="deleteForm(form)" class="glyphicon glyphicon-remove fa-2x"></span>
+                <span ng-click="selectForm(form)" class="glyphicon glyphicon-pencil fa-2x"></span>
+            </td>
+        </tr>
+
+    </tbody>
+</table>
