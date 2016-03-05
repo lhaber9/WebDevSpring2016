@@ -8,7 +8,7 @@
 
         $scope.logout = function() {
             $rootScope.currentUser = null;
-            $location("#/home");
+            $location("home");
         }
     }
 })();

@@ -31,7 +31,7 @@
 
         function updateForm() {
             if ($scope.selectedForm) {
-                $scope.selectedForm["title"] = $scope.newForm["title"];
+                $scope.selectedForm["title"] = $scope.newFormName;
                 FormService.updateFormById($scope.selectedForm["_id"], $scope.selectedForm, function(form) {
                     $scope.selectedForm = null;
                 });
