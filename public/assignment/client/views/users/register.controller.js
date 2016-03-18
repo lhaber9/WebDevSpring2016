@@ -11,8 +11,8 @@
         };
 
         $scope.register = function() {
-            UserService.createUser($scope.user, function(user) {
-                $rootScope.currentUser = user;
+            UserService.createUser($scope.user).then(function(response) {
+                $rootScope.currentUser = response.data;
                 $location.path("#/profile");
             });
         }

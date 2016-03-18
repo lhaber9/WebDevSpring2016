@@ -10,10 +10,9 @@
         };
 
         $scope.login = function() {
-            UserService.findUserByCredentials($scope.loginUser.username, $scope.loginUser.password, function(user) {
-                if (user) {
-                    console.log("HERE");
-                    $rootScope.currentUser = user;
+            UserService.findUserByCredentials($scope.loginUser.username, $scope.loginUser.password).then(function(response) {
+                if (response.data) {
+                    $rootScope.currentUser = response.data;
                     $location.path("profile");
                 }
             });

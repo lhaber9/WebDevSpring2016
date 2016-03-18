@@ -9,9 +9,11 @@
         console.log($scope.user);
 
         $scope.update = function() {
-            UserService.updateUser($scope.user["_id"], $scope.user, function(user) {
-                $rootScope.currentUser = user;
-                $location.path("#/profile");
+            UserService.updateUser($scope.user["_id"], $scope.user).then(function(response) {
+                if (response.data) {
+                    $rootScope.currentUser = $scope.user;
+                    $location.path("#/profile");
+                }
             });
         }
     }

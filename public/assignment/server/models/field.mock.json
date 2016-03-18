@@ -1,0 +1,18 @@
+[
+  {"_id": "001", "formId": "001", "label": "First Name", "type": "TEXT", "placeholder": "First Name"},
+  {"_id": "002", "formId": "001", "label": "Last Name", "type": "TEXT", "placeholder": "Last Name"},
+  {"_id": "003", "formId": "001", "label": "Date of Birth", "type": "DATE"},
+  {"_id":"004", "formId": "001", "label": "Gender", "type": "OPTIONS", "options": [
+    {"label": "Male", "value": "MALE"},
+    {"label": "Female", "value": "FEMALE"}
+  ]},
+  {"_id": "005", "formId": "001", "label": "Roles", "type": "CHECKBOXES", "options": [
+    {"label": "Admin", "value": "ADMIN"},
+    {"label": "Student", "value": "STUDENT"},
+    {"label": "User", "value": "USER"}
+  ]},
+  {"_id": "006", "formId": "001", "label": "License Agreement", "type": "RADIOS", "options": [
+    {"label": "Yes", "value": "YES"},
+    {"label": "No", "value": "NO"}
+  ]}
+]
