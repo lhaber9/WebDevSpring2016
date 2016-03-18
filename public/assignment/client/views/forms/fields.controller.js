@@ -10,7 +10,12 @@
 
         $scope.fieldType;
 
-        $("#sortableFields").sortable({ handle: '.handle' });
+        $("#sortableFields").sortable({ handle: '.handle',
+                                          stop: function(event) {
+                                              FieldService.updateFieldsForForm($scope.formId, $( "#sortableFields" ).sortable( "toArray" ));
+                                          }
+
+        });
 
         function updateFields() {
             FieldService.getFieldsForForm($scope.formId).then(function(response) {
@@ -74,6 +79,8 @@
 
                 $scope.editingField.options = newOptions;
             }
+
+            console.log($scope.editingField);
 
             FieldService.updateField($scope.formId, $scope.editingField._id, $scope.editingField).then(function(response) {
                 $scope.editingField = null;

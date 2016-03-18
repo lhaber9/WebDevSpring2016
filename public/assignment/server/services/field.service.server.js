@@ -36,8 +36,10 @@ module.exports = function(app, model, uuid) {
         res.json(fields);
     });
 
-
-
-
-
+    app.put('/api/assignment/form/:formId/fields', function(req, res) {
+        var formId = req.params.formId;
+        var fieldIds = req.body;
+        var fields = model.updateOrderForForm(formId, fieldIds);
+        res.json(fields);
+    });
 }

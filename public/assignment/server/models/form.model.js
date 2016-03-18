@@ -23,7 +23,7 @@ module.exports = function() {
     }
 
     function findById(formId) {
-        var index = findUserIndexById(formId);
+        var index = findFormIndexById(formId);
         if (index) {
             return formData[index];
         }
