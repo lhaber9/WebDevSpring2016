@@ -10,7 +10,7 @@
 
         $scope.fieldType;
 
-        $("#sortableFields").sortable();
+        $("#sortableFields").sortable({ handle: '.handle' });
 
         function updateFields() {
             FieldService.getFieldsForForm($scope.formId).then(function(response) {
