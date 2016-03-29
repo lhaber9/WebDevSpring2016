@@ -5,6 +5,18 @@
 
     function Configuration($routeProvider) {
         $routeProvider
+            .when("/login", {
+                templateUrl: "views/user/login.view.html",
+                controller: "LoginController"
+            })
+            .when("/signup", {
+                templateUrl: "views/user/signup.view.html",
+                controller: "SignupController"
+            })
+            .when("/profile", {
+                templateUrl: "views/user/profile.view.html",
+                controller: "ProfileController"
+            })
             .when("/home", {
                 templateUrl: "views/home/home.view.html",
                 controller: "HomeController"
@@ -42,7 +54,7 @@
                 controller: "UserController"
             })
             .otherwise({
-                redirectTo: "/home"
+                redirectTo: "/login"
             });
     }
 })();
