@@ -1,0 +1,16 @@
+<table class="table table-striped table-hover">
+    <thead>
+    <tr>
+        <th>Game Name</th>
+        <th>Admin Name</th>
+        <th>Number of Players</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="joinGameRow" ng-repeat="game in availableGames" ng-click="chooseGame(game)">
+        <td>{{game.name}}</td>
+        <td>{{game.admin.name}}</td>
+        <td>{{game.numPlayers}}</td>
+    </tr>
+    </tbody>
+</table>

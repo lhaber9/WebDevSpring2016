@@ -1,0 +1,30 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>username</th>
+        <th>password</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="joinGameRow">
+        <td><input ng-model="editingUser.id" type="text" name="id" id="id" placeholder="id"></td>
+        <td><input ng-model="editingUser.username" type="text" name="username" id="username" placeholder="username"></td>
+        <td><input ng-model="editingUser.password" type="text" name="password" id="password" placeholder="password"></td>
+        <td>
+            <span ng-click="addUser()" class="glyphicon glyphicon-plus fa-2x"></span>
+            <span ng-click="updateUser()" class="glyphicon glyphicon-ok fa-2x"></span>
+        </td>
+    </tr>
+    <tr class="joinGameRow" ng-repeat="user in users">
+        <td>{{user.id}}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.password}}</td>
+        <td>
+            <span ng-click="deleteUser(user)" class="glyphicon glyphicon-remove fa-2x"></span>
+            <span ng-click="selectUser(user)" class="glyphicon glyphicon-pencil fa-2x"></span>
+        </td>
+    </tr>
+    </tbody>
+</table>

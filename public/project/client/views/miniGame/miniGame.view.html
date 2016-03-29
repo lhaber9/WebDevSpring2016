@@ -1,0 +1,36 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>isActive</th>
+        <th>match</th>
+        <th>miniGameType</th>
+        <th>players</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="joinGameRow">
+        <td><input ng-model="editingMiniGame.id" type="text" name="id" id="id" placeholder="id"></td>
+        <td><input ng-model="editingMiniGame.isActive" type="boolean" name="isActive" id="isActive" placeholder="isActive"></td>
+        <td><input ng-model="editingMiniGame.match" type="text" name="match" id="miniGame" placeholder="matchId"></td>
+        <td><input ng-model="editingMiniGame.miniGameType" type="text" name="miniGameType" id="miniGameType" placeholder="miniGameTypeId"></td>
+        <td><input ng-model="editingMiniGame.players" type="number" name="players" id="players" placeholder="players"></td>
+        <td>
+            <span ng-click="addMiniGame()" class="glyphicon glyphicon-plus fa-2x"></span>
+            <span ng-click="updateMiniGame()" class="glyphicon glyphicon-ok fa-2x"></span>
+        </td>
+    </tr>
+    <tr class="joinGameRow" ng-repeat="miniGame in miniGames">
+        <td>{{miniGame.id}}</td>
+        <td>{{miniGame.isActive}}</td>
+        <td>{{miniGame.match}}</td>
+        <td>{{miniGame.miniGameType}}</td>
+        <td>{{miniGame.players}}</td>
+        <td>
+            <span ng-click="deleteMiniGame(miniGame)" class="glyphicon glyphicon-remove fa-2x"></span>
+            <span ng-click="selectMiniGame(miniGame)" class="glyphicon glyphicon-pencil fa-2x"></span>
+        </td>
+    </tr>
+    </tbody>
+</table>

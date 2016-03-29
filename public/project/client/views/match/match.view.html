@@ -1,0 +1,39 @@
+<table class="table table-striped table-responsive">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>isActive</th>
+        <th>maxPlayers</th>
+        <th>matchAdmin</th>
+        <th>players</th>
+        <th>winner</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr class="joinGameRow">
+            <td><input ng-model="editingMatch.id" type="text" name="id" id="id" placeholder="id"></td>
+            <td><input ng-model="editingMatch.isActive" type="boolean" name="isActive" id="isActive" placeholder="isActive"></td>
+            <td><input ng-model="editingMatch.maxPlayers" type="number" name="maxPlayers" id="maxPlayers" placeholder="maxPlayers"></td>
+            <td><input ng-model="editingMatch.matchAdmin" type="text" name="matchAdmin" id="matchAdmin" placeholder="userId"></td>
+            <td><input ng-model="editingMatch.players" type="number" name="players" id="players" placeholder="players"></td>
+            <td><input ng-model="editingMatch.winner" type="text" name="winner" id="winner" placeholder="userId"></td>
+            <td>
+                <span ng-click="addMatch()" class="glyphicon glyphicon-plus fa-2x"></span>
+                <span ng-click="updateMatch()" class="glyphicon glyphicon-ok fa-2x"></span>
+            </td>
+        </tr>
+        <tr class="joinGameRow" ng-repeat="match in matches">
+            <td>{{match.id}}</td>
+            <td>{{match.isActive}}</td>
+            <td>{{match.maxPlayers}}</td>
+            <td>{{match.matchAdmin}}</td>
+            <td>{{match.players}}</td>
+            <td>{{match.winner}}</td>
+            <td>
+                <span ng-click="deleteMatch(match)" class="glyphicon glyphicon-remove fa-2x"></span>
+                <span ng-click="selectMatch(match)" class="glyphicon glyphicon-pencil fa-2x"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>

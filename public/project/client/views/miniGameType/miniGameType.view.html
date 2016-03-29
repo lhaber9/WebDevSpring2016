@@ -1,0 +1,36 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>isActive</th>
+        <th>maxPlayers</th>
+        <th>description</th>
+        <th>gameLength</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="joinGameRow">
+        <td><input ng-model="editingMiniGameType.id" type="text" name="id" id="id" placeholder="id"></td>
+        <td><input ng-model="editingMiniGameType.isActive" type="boolean" name="isActive" id="isActive" placeholder="isActive"></td>
+        <td><input ng-model="editingMiniGameType.maxPlayers" type="number" name="maxPlayers" id="maxPlayers" placeholder="maxPlayers"></td>
+        <td><input ng-model="editingMiniGameType.description" type="text" name="description" id="description" placeholder="description"></td>
+        <td><input ng-model="editingMiniGameType.gameLength" type="number" name="gameLength" id="gameLength" placeholder="gameLength"></td>
+        <td>
+            <span ng-click="addMiniGameType()" class="glyphicon glyphicon-plus fa-2x"></span>
+            <span ng-click="updateMiniGameType()" class="glyphicon glyphicon-ok fa-2x"></span>
+        </td>
+    </tr>
+    <tr class="joinGameRow" ng-repeat="miniGameType in miniGameTypes">
+        <td>{{miniGameType.id}}</td>
+        <td>{{miniGameType.isActive}}</td>
+        <td>{{miniGameType.maxPlayers}}</td>
+        <td>{{miniGameType.description}}</td>
+        <td>{{miniGameType.gameLength}}</td>
+        <td>
+            <span ng-click="deleteMiniGameType(miniGameType)" class="glyphicon glyphicon-remove fa-2x"></span>
+            <span ng-click="selectMiniGameType(miniGameType)" class="glyphicon glyphicon-pencil fa-2x"></span>
+        </td>
+    </tr>
+    </tbody>
+</table>
