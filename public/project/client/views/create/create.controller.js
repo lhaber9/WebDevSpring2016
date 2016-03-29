@@ -18,9 +18,9 @@
                 if (response.data) {
                     $rootScope.currentMatch = response.data;
                     MatchService.addPlayerToMatch($rootScope.currentUser, response.data.id);
+                    $location.path('play');
                 }
             });
-            $location.path('play')
         }
     }
 })();
