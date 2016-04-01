@@ -66,6 +66,7 @@
         }
 
         $scope.saveEditingField = function() {
+            console.log("HERE11")
             if ($scope.editingField.optionDescription) {
                 var newOptions = [];
 

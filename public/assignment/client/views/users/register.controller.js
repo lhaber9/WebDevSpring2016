@@ -7,7 +7,7 @@
         $scope.user = {
             "username": "",
             "password": "",
-            "email": ""
+            "emails": [""]
         };
 
         $scope.register = function() {

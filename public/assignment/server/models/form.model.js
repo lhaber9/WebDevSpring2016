@@ -1,6 +1,8 @@
-var formData = require('./form.mock.json');
-module.exports = function() {
+var q = require("q");
 
+module.exports = function(mongoose) {
+    var FormSchema = require("./form.schema.server.js")(mongoose);
+    var FormModel = mongoose.model("FormModel", FormSchema);
     var api = {
         findAll: findAll,
         findById: findById,
@@ -14,68 +16,108 @@ module.exports = function() {
     return api;
 
     function create(form) {
-        formData.push(form);
-        return form;
+        var deferred = q.defer();
+
+        FormModel.create(form, function (err, form) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(form);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function findAll() {
-        return formData;
+        var deferred = q.defer();
+
+        FormModel.find(function (err, forms) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(forms);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function findById(formId) {
-        var index = findFormIndexById(formId);
-        if (index) {
-            return formData[index];
-        }
+        var deferred = q.defer();
 
-        return null;
+        FormModel.findById(formId, function (err, form) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(form);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function updateById(formId, newForm) {
-        var index = findFormIndexById(formId);
-        if (index) {
-            formData[index] = newForm;
-        }
-        return formData;
+        var deferred = q.defer();
+
+        FormModel.findById(formId, function (err, form) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                form.title = newForm.title
+                form.save(function (err, form) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(form);
+                    }
+                });
+            }
+        });
+
+        return deferred.promise;
     }
 
     function deleteById(formId) {
-        var index = findFormIndexById(formId);
-        if (index) {
-            formData.splice(index, 1);
-        }
-        return formData;
+        var deferred = q.defer();
+
+        FormModel.remove({_id: formId}, function (err, status) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(status);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function findFormByTitle(title) {
-        for (formIdx in formData) {
-            var form = formData[formIdx];
-            if (form["title"] == title) {
-                return form;
-            }
-        }
-        return null;
-    }
+        var deferred = q.defer();
 
-    function findFormIndexById(formId) {
-        for (formIdx in formData) {
-            var form = formData[formIdx];
-            if (form["_id"] == formId) {
-                return formIdx;
+        FormModel.findOne({title: title}, function (err, form) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(form);
             }
-        }
-        return null;
+        });
+
+        return deferred.promise;
     }
 
     function findFormsByUserId(userId) {
-        var userForms = [];
-        for (formIdx in formData) {
-            var form = formData[formIdx];
-            if (form["userId"] == userId) {
-                userForms.push(form);
+        var deferred = q.defer();
+
+        FormModel.find({userId: userId}, function (err, forms) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(forms);
             }
-        }
-        return userForms
+        });
+
+        return deferred.promise;
     }
 
 }

@@ -2,35 +2,64 @@ module.exports = function(app, model, uuid) {
 
     app.get('/api/assignment/user/:userId/form', function(req, res) {
         var userId = req.params.userId;
-        var userForms = model.findFormsByUserId(userId);
-        res.json(userForms);
+        model.findFormsByUserId(userId).then(
+            function(forms) {
+                res.json(forms);
+            },
+            function(err) {
+                res.status(400).send(err);
+            }
+        );
     });
 
     app.get('/api/assignment/form/:formId', function(req, res) {
         var formId = req.params.formId;
-        var form = model.findById(formId);
-        res.json(form);
+        model.findById(formId).then(
+            function(form) {
+                res.json(form);
+            },
+            function(err) {
+                res.status(400).send(err);
+            }
+        );
     });
 
     app.delete('/api/assignment/form/:formId', function(req, res) {
         var formId = req.params.formId;
-        var forms = model.deleteById(formId);
-        res.json(forms);
+        model.deleteById(formId).then(
+            function(status) {
+                res.json(status);
+            },
+            function(err) {
+                res.status(400).send(err);
+            }
+        );
     });
 
     app.post('/api/assignment/user/:userId/form', function(req, res) {
         var newForm = req.body;
         newForm.userId = req.params.userId;
-        newForm._id = uuid.v1();
-        var form = model.create(newForm);
-        res.json(form);
+        model.create(newForm).then(
+            function(form) {
+                res.json(form);
+            },
+            function(err) {
+                res.status(400).send(err);
+            }
+        );
     });
 
     app.put('/api/assignment/form/:formId', function(req, res) {
         var formId = req.params.formId;
         var newForm = req.body;
-        var forms = model.updateById(formId, newForm);
-        res.json(forms);
+        model.updateById(formId, newForm).then(
+            function(form) {
+                res.json(form);
+            },
+            function(err) {
+                res.status(400).send(err);
+            }
+        );
     });
 
 }
