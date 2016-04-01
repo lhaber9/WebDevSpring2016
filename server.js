@@ -4,10 +4,6 @@ var bodyParser = require('body-parser');
 var app = express();
 var mongoose = require('mongoose');
 
-app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
 var connectionString = 'mongodb://127.0.0.1:27017/formMakerDB';
 
 // use remote connection string
@@ -24,6 +20,10 @@ var db = mongoose.connect(connectionString);
 
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
+
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 require("./public/assignment/server/app.js")(app, uuid, mongoose);
 require("./public/project/server/app.js")(app, uuid);
