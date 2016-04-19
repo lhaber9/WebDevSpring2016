@@ -11,7 +11,8 @@
             updateMiniGame:updateMiniGame,
             getMiniGame:getMiniGame,
             getAllMiniGames:getAllMiniGames,
-            deactivateMiniGateType:deactivateMiniGateType
+            finishMiniGame:finishMiniGame,
+            addResult:addResult
         };
 
         return api;
@@ -36,8 +37,12 @@
             return $http.get("/api/project/miniGame");
         }
 
-        function deactivateMiniGateType(miniGameId) {
-            return $http.put("/api/project/miniGame/deactivate/" + miniGameId);
+        function finishMiniGame(miniGameId, winner) {
+            return $http.put("/api/project/finish/miniGame/" + miniGameId, winner);
+        }
+
+        function addResult(miniGameId, player, time) {
+            return $http.put("/api/project/miniGame/" + miniGameId + "/" + time, player);
         }
     }
 })();

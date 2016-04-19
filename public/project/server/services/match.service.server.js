@@ -90,8 +90,19 @@ module.exports = function(app, model, uuid) {
         );
     });
 
-    app.get('/api/project/match/active', function(req, res) {
+    app.get('/api/project/active/match', function(req, res) {
         model.getAllActiveMatches().then(
+            function(activeMatches) {
+                res.json(activeMatches);
+            },
+            function(err) {
+                res.status(400).send(err);
+            }
+        );
+    });
+
+    app.get('/api/project/unstarted/match', function(req, res) {
+        model.getAllActiveUnstartedMatches().then(
             function(activeMatches) {
                 res.json(activeMatches);
             },
@@ -108,6 +119,7 @@ module.exports = function(app, model, uuid) {
                 res.json(match);
             },
             function(err) {
+                console.log(err);
                 res.status(400).send(err);
             }
         );

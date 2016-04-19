@@ -26,6 +26,28 @@ module.exports = function(app, model, uuid) {
         );
     });
 
+    app.put('/api/project/miniGame/:miniGameId/:time', function(req, res) {
+        var miniGameId = req.params.miniGameId;
+        var player = req.body;
+        var time = req.params.time;
+        model.addResult(miniGameId, player, time).then(
+            function(miniGame) {
+                return model.getMiniGame(miniGameId);
+            },
+            function(err) {
+                res.status(400).send(err);
+            }
+        ).then(
+            function(miniGame) {
+                res.json(miniGame);
+            },
+            function(err) {
+                console.log(err);
+                res.status(400).send(err);
+            }
+        );
+    });
+
     app.delete('/api/project/miniGame/:miniGameId', function(req, res) {
         var miniGameId = req.params.miniGameId;
         model.deleteMiniGame(miniGameId).then(
@@ -61,9 +83,10 @@ module.exports = function(app, model, uuid) {
         );
     });
 
-    app.put('/api/project/miniGame/deactivate/:miniGameId', function(req, res) {
+    app.put('/api/project/finish/miniGame/:miniGameId', function(req, res) {
         var miniGameId = req.params.miniGameId;
-        model.deactivateMiniGateType(miniGameId).then(
+        var winningPlayer = req.body;
+        model.finishMiniGame(miniGameId, winningPlayer).then(
             function(miniGame) {
                 res.json(miniGame);
             },

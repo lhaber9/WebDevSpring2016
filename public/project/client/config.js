@@ -73,7 +73,7 @@
             });
     }
 
-    var checkCurrentUserAndMatch = function($q, $timeout, $http, $location, $rootScope, MatchService) {
+    var checkCurrentUserAndMatch = function($q, $timeout, $http, $location, $rootScope, MatchService, MiniGameService) {
         var deferred = $q.defer();
 
         $http.get("/api/project/user/loggedIn").success(function(user)
@@ -85,6 +85,7 @@
                     MatchService.getMatch($rootScope.currentUser.currentMatchId).then(function(response) {
                         if (response.data) {
                             $rootScope.currentMatch = response.data;
+                            $rootScope.currentMiniGame = $rootScope.currentMatch.currentMiniGame;
                         }
                         deferred.resolve();
                     });

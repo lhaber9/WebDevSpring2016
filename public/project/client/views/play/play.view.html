@@ -5,12 +5,28 @@
     <div class="row" ng-hide="!isAdmin || $rootScope.currentMatch.isStarted">
         <button ng-click="startMatch()" class="btn btn-block">Start Game</button>
     </div>
-    <div class="row" ng-hide="!$rootScope.currentMatch.isStarted">
-        <div class="row" ng-hide="countdownTimer == null">
+    <div class="row" ng-show="$rootScope.currentMatch.isStarted">
+        <div ng-hide="countdownTimer == null">
             Starting in {{countdownSeconds}}
         </div>
-        <div class="row" ng-show="countdownTimer == null">
-            Hit the button as fast as you can!
+        <div ng-show="countdownTimer == null">
+            <div ng-show="!userFinished">
+                Hit the button as fast as you can!
+
+                <button ng-click="click()">Click Me!!</button>
+            </div>
+            <div ng-show="userFinished">
+                <h4 ng-show="miniGameStartTime != null">Waiting for everyone else to finish!</h4>
+                <div ng-show="miniGameStartTime == null">
+
+                    <h3>Results</h3>
+                    <h5 ng-repeat="result in $rootScope.currentMiniGame.results">
+                        {{result.player.username}} took {{result.time / 1000}} seconds
+                    </h5>
+
+                    <button ng-click="startMiniGame()" ng-hide="!isAdmin">Start Next Round</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

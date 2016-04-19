@@ -15,7 +15,8 @@
             deactivateMiniGateType:deactivateMiniGateType,
             addPlayerToMatch:addPlayerToMatch,
             removePlayerFromMatch:removePlayerFromMatch,
-            startMatch:startMatch
+            startMatch:startMatch,
+            getAllActiveUnstartedMatches:getAllActiveUnstartedMatches
         };
 
         return api;
@@ -45,7 +46,11 @@
         }
 
         function getAllActiveMatches() {
-            return $http.get("/api/project/match");
+            return $http.get("/api/project/active/match");
+        }
+
+        function getAllActiveUnstartedMatches() {
+            return $http.get("/api/project/unstarted/match");
         }
 
         function deactivateMiniGateType(matchId) {

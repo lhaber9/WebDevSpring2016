@@ -10,7 +10,8 @@ module.exports = function(mongoose) {
         updateMiniGame: updateMiniGame,
         getMiniGame: getMiniGame,
         getAllMiniGames: getAllMiniGames,
-        deactivateMiniGame: deactivateMiniGame
+        finishMiniGame: finishMiniGame,
+        addResult: addResult
     };
 
     return api;
@@ -44,23 +45,27 @@ module.exports = function(mongoose) {
     }
 
     function getMiniGame(miniGameId) {
-        var deferred = q.defer();
-
-        MiniGameModel.findById(miniGameId, function (err, miniGames) {
-            if (err) {
-                deferred.reject(err);
-            } else {
-                deferred.resolve(miniGames);
-            }
-        });
-
-        return deferred.promise;
+        return MiniGameModel.findById(miniGameId);
     }
 
     function updateMiniGame(miniGameId, newMiniGame) {
         var deferred = q.defer();
 
         MiniGameModel.update({_id: miniGameId}, {$set: newMiniGame}, function (err, miniGame) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(miniGame);
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    function addResult(miniGameId, player, time) {
+        var deferred = q.defer();
+
+        MiniGameModel.update({_id: miniGameId}, {$push: {results: {player: player, time: time}}}, function (err, miniGame) {
             if (err) {
                 deferred.reject(err);
             } else {
@@ -85,10 +90,10 @@ module.exports = function(mongoose) {
         return deferred.promise;
     }
 
-    function deactivateMiniGame() {
+    function finishMiniGame(miniGameId, winningPlayer) {
         var deferred = q.defer();
 
-        MiniGameModel.update({_id: miniGameId}, {$set: {isActive: false}}, function (err, miniGame) {
+        MiniGameModel.update({_id: miniGameId}, {$set: {isActive: false, winner: winningPlayer}}, function (err, miniGame) {
             if (err) {
                 deferred.reject(err);
             } else {

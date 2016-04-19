@@ -9,6 +9,7 @@
             "name":"",
             "maxPlayers": 0,
             "matchAdmin": $rootScope.currentUser,
+            "isStarted": false
         }
 
         $scope.createGame = createGame;
@@ -20,7 +21,7 @@
                     $rootScope.currentUser.currentMatchId = $rootScope.currentMatch._id;
                     MatchService.addPlayerToMatch($rootScope.currentUser, response.data._id).then(function(response) {
                         if (response.data) {
-                            $scope.currentMatch = response.data;
+                            $rootScope.currentMatch = response.data;
                         }
                     });
                     UserService.updateUser($rootScope.currentUser._id, $rootScope.currentUser);

@@ -14,7 +14,8 @@ module.exports = function(mongoose) {
         deactivateMatch: deactivateMatch,
         addUserToMatch:addUserToMatch,
         removeUserFromMatch:removeUserFromMatch,
-        startMatch:startMatch
+        startMatch:startMatch,
+        getAllActiveUnstartedMatches: getAllActiveUnstartedMatches
     };
 
     return api;
@@ -65,6 +66,20 @@ module.exports = function(mongoose) {
         var deferred = q.defer();
 
         MatchModel.find({isActive:true},function (err, matches) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(matches);
+            }
+        });
+
+        return deferred.promise;
+    }
+
+    function getAllActiveUnstartedMatches() {
+        var deferred = q.defer();
+
+        MatchModel.find({isActive:true, isStarted:false},function (err, matches) {
             if (err) {
                 deferred.reject(err);
             } else {
