@@ -11,7 +11,8 @@
             updateUser:updateUser,
             getUser:getUser,
             getAllUsers:getAllUsers,
-            getUserWithCredentials:getUserWithCredentials
+            login:login,
+            isLoggedIn:isLoggedIn
         };
 
         return api;
@@ -36,8 +37,12 @@
             return $http.get("/api/project/user");
         }
 
-        function getUserWithCredentials(credentials) {
-            return $http.get("/api/project/user?username=" + credentials.username + "&password=" + credentials.password);
+        function login(credentials) {
+            return $http.post("/api/project/user/login", credentials);
+        }
+
+        function isLoggedIn() {
+            return $http.get("/api/project/user/loggedIn");
         }
     }
 })();

@@ -14,8 +14,8 @@
 
         function signup() {
             UserService.createUser($scope.user).then(function(response) {
-                console.log(response.data);
                 if (response.data) {
+                    console.log(response.data);
                     $rootScope.currentUser = response.data;
                     $location.path("home");
                 }

@@ -10,7 +10,7 @@
         console.log($scope.user);
 
         function update() {
-            UserService.updateUser($scope.user.id, $scope.user).then(function(response){
+            UserService.updateUser($rootScope.currentUser._id, $scope.user).then(function(response){
                 if (response.data) {
                     $rootScope.currentUser = response.data;
                     $location.path("home");

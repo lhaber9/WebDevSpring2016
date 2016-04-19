@@ -10,8 +10,8 @@
     </thead>
     <tbody>
     <tr class="joinGameRow" ng-repeat="game in availableGames" ng-click="chooseGame(game)">
-        <td>{{game.nameOfGame}}</td>
-        <td>{{game.admin.name}}</td>
+        <td>{{game.name}}</td>
+        <td>{{game.matchAdmin.name}}</td>
         <td>{{game.players.length}}</td>
     </tr>
     </tbody>

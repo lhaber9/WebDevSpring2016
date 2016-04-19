@@ -3,8 +3,24 @@
         .module("ProjectApp")
         .controller("MainController", MainController);
 
-    function MainController($location, $scope, $rootScope) {
+    function MainController($location, $scope, $rootScope, UserService, MatchService) {
         $scope.$location = $location;
-        $rootScope.isAdmin = false;
+
+        //UserService.isLoggedIn().then(function(response) {
+        //    if (response.data == '0') {
+        //        $location.path('#/');
+        //    }
+        //    else {
+        //        $rootScope.currentUser = response.data;
+        //        if ($rootScope.currentUser.currentMatchId != null) {
+        //            MatchService.getMatch($rootScope.currentUser.currentMatchId).then(function(response) {
+        //                if (response.data) {
+        //                    console.log(response.data);
+        //                    $rootScope.currentMatch = response.data;
+        //                }
+        //            });
+        //        }
+        //    }
+        //});
     }
 })();

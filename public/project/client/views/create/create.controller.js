@@ -3,12 +3,12 @@
         .module("ProjectApp")
         .controller("CreateController", CreateController);
 
-    function CreateController($scope, $location, $rootScope, MatchService) {
+    function CreateController($scope, $location, $rootScope, MatchService, UserService) {
 
         $scope.game = {
-            "nameOfGame":"",
-            "maximumPlayers": 0,
-            "admin": $rootScope.currentUser,
+            "name":"",
+            "maxPlayers": 0,
+            "matchAdmin": $rootScope.currentUser,
         }
 
         $scope.createGame = createGame;
@@ -17,7 +17,13 @@
             MatchService.createMatch($scope.game).then(function(response) {
                 if (response.data) {
                     $rootScope.currentMatch = response.data;
-                    MatchService.addPlayerToMatch($rootScope.currentUser, response.data.id);
+                    $rootScope.currentUser.currentMatchId = $rootScope.currentMatch._id;
+                    MatchService.addPlayerToMatch($rootScope.currentUser, response.data._id).then(function(response) {
+                        if (response.data) {
+                            $scope.currentMatch = response.data;
+                        }
+                    });
+                    UserService.updateUser($rootScope.currentUser._id, $rootScope.currentUser);
                     $location.path('play');
                 }
             });

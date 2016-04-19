@@ -11,7 +11,9 @@
             deleteUserById: deleteUserById,
             updateUser: updateUser,
             findUserByUsername:findUserByUsername,
-            findAllUsers:findAllUsers
+            findAllUsers:findAllUsers,
+            isLoggedIn:isLoggedIn,
+            logout:logout
         };
 
         return api;
@@ -21,7 +23,7 @@
         }
 
         function findUserByCredentials(username, password) {
-            return $http.get("/api/assignment/user?username=" + username + "&password=" + password);
+            return $http.get("/api/assignment/login?username=" + username + "&password=" + password);
         }
 
         function findAllUsers() {
@@ -29,7 +31,7 @@
         }
 
         function createUser(user) {
-            return $http.post("/api/assignment/user", user);
+            return $http.post("/api/assignment/register", user);
         }
 
         function deleteUserById(userId) {
@@ -38,6 +40,14 @@
 
         function updateUser(userId, user) {
             return $http.put("/api/assignment/user/" + userId, user);
+        }
+
+        function isLoggedIn(user) {
+            return $http.put("/api/assignment/loggedin", user);
+        }
+
+        function logout(user) {
+            return $http.put("/api/assignment/logout", user);
         }
     }
 })();

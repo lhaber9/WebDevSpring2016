@@ -1,5 +1,8 @@
-var matchData = require('./match.mock.json');
-module.exports = function() {
+var q = require("q");
+
+module.exports = function(mongoose) {
+    var MatchSchema = require("./match.schema.server.js")(mongoose);
+    var MatchModel = mongoose.model("MatchModel", MatchSchema);
 
     var api = {
         createMatch: createMatch,
@@ -17,102 +20,159 @@ module.exports = function() {
     return api;
 
     function createMatch(match) {
-        matchData.push(match);
-        return match;
+        var deferred = q.defer();
+
+        MatchModel.create(match, function (err, match) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(match);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function startMatch(matchId) {
-        var index = findMatchIndexById(matchId);
-        if (index) {
-            matchData[index].isStarted = true;
-            return matchData[index];
-        }
+        var deferred = q.defer();
 
-        return null;
+        MatchModel.update({_id: matchId}, { $set: {isStarted: true} }, function (err, obj) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(obj);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function getAllMatches() {
-        return matchData;
+        var deferred = q.defer();
+
+        MatchModel.find(function (err, matches) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(matches);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function getAllActiveMatches() {
-        var matches = [];
+        var deferred = q.defer();
 
-        console.log("HERE");
-        console.log(matchData);
-
-        for (matchIdx in matchData) {
-            var match = matchData[matchIdx];
-            if (match["isActive"] == true) {
-                return matches.push(match);
+        MatchModel.find({isActive:true},function (err, matches) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(matches);
             }
-        }
+        });
 
-        return matches;
+        return deferred.promise;
     }
 
     function getMatch(matchId) {
-        var index = findMatchIndexById(matchId);
-        if (index) {
-            return matchData[index];
-        }
+        var deferred = q.defer();
 
-        return null;
+        MatchModel.findById(matchId,function (err, match) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(match);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function updateMatch(matchId, newMatch) {
-        var index = findMatchIndexById(matchId);
-        if (index) {
-            matchData[index] = newMatch;
-        }
-        return matchData;
+        var deferred = q.defer();
+
+        MatchModel.update({_id: matchId}, {$set: newMatch}, function (err, obj) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(obj);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function deleteMatch(matchId) {
-        var index = findMatchIndexById(matchId);
-        if (index) {
-            matchData.splice(index, 1);
-        }
-        return matchData;
+        var deferred = q.defer();
+
+        MatchModel.remove({_id: matchId}, function (err, obj) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(obj);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function deactivateMatch() {
-        var index = findMatchIndexById(matchId);
-        if (index) {
-            matchData[index].isActive = false;
-        }
-        return matchData;
+        var deferred = q.defer();
+
+        MatchModel.update({_id: matchId}, { $set: {isActive: false} }, function (err, obj) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(obj);
+            }
+        });
+
+        return deferred.promise;
     }
 
-    function addUserToMatch(user, matchId) {
-        var index = findMatchIndexById(matchId);
-        if (index) {
-            matchData[index].players.push(user);
-        }
-        return matchData;
+    function addUserToMatch(userId, matchId) {
+        var deferred = q.defer();
+
+        MatchModel.findById(matchId, function (err, match) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                if (match.players.indexOf(userId) == -1) {
+                    MatchModel.update({_id: matchId}, { $push: {players: userId} }, function (err, obj) {
+                        if (err) {
+                            deferred.reject(err);
+                        } else {
+                            deferred.resolve(obj);
+                        }
+                    });
+                }
+            }
+        });
+
+        return deferred.promise;
     }
 
     function removeUserFromMatch(userId, matchId) {
-        var index = findMatchIndexById(matchId);
-        if (index) {
-            for (userIdx in matchData[index].players) {
-                var user = matchData[index].players[matchIdx];
-                if (user["id"] == userId) {
-                    matchData[index].players.splice(index, 1);
+        var deferred = q.defer();
+
+        MatchModel.findById(matchId, function (err, match) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                if (match.players.indexOf(userId) != -1) {
+                    match.players.splice(match.players.indexOf(userId), 1);
+                    match.save(function(err, match){
+                        if (err) {
+                            deferred.reject(err);
+                        } else {
+                            deferred.resolve(match);
+                        }
+                    })
                 }
             }
-        }
-        return matchData;
-    }
+        });
 
-    function findMatchIndexById(matchId) {
-        for (matchIdx in matchData) {
-            var match = matchData[matchIdx];
-            if (match["id"] == matchId) {
-                return matchIdx;
-            }
-        }
-
-        return null;
+        return deferred.promise;
     }
 }

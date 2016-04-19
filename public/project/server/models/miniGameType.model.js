@@ -1,5 +1,8 @@
-var miniGameTypeData = require('./miniGameType.mock.json');
-module.exports = function() {
+var q = require("q");
+
+module.exports = function(mongoose) {
+    var MiniGameTypeSchema = require("./miniGameType.schema.server.js")(mongoose);
+    var MiniGameTypeModel = mongoose.model("MiniGameTypeModel", MiniGameTypeSchema);
 
     var api = {
         createMiniGameType: createMiniGameType,
@@ -13,55 +16,86 @@ module.exports = function() {
     return api;
 
     function createMiniGameType(miniGameType) {
-        miniGameTypeData.push(miniGameType);
-        return miniGameTypeData;
+        var deferred = q.defer();
+
+        MiniGameTypeModel.create(miniGameType, function (err, miniGameType) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(miniGameType);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function getAllMiniGameTypes() {
-        return miniGameTypeData;
+        var deferred = q.defer();
+
+        MiniGameTypeModel.find(function (err, miniGameTypes) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(miniGameTypes);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function getMiniGameType(miniGameTypeId) {
-        var index = findMiniGameTypeIndexById(miniGameTypeId);
-        if (index) {
-            return miniGameTypeData[index];
-        }
+        var deferred = q.defer();
 
-        return null;
+        MiniGameTypeModel.findById(miniGameTypeId, function (err, miniGameType) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(miniGameType);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function updateMiniGameType(miniGameTypeId, newMiniGameType) {
-        var index = findMiniGameTypeIndexById(miniGameTypeId);
-        if (index) {
-            miniGameTypeData[index] = newMiniGameType;
-        }
-        return miniGameTypeData;
+        var deferred = q.defer();
+
+        MiniGameTypeModel.update({_id: miniGameTypeId}, {$set: newMiniGameType}, function (err, miniGameType) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(miniGameType);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function deleteMiniGameType(miniGameTypeId) {
-        var index = findMiniGameTypeIndexById(miniGameTypeId);
-        if (index) {
-            miniGameTypeData.splice(index, 1);
-        }
-        return miniGameTypeData;
-    }
+        var deferred = q.defer();
 
-    function deactivateMiniGameType() {
-        var index = findMiniGameTypeIndexById(miniGameTypeId);
-        if (index) {
-            miniGameTypeData[index].isActive = false;
-        }
-        return miniGameTypeData;
-    }
-
-    function findMiniGameTypeIndexById(miniGameTypeId) {
-        for (miniGameTypeIdx in miniGameTypeData) {
-            var miniGameType = miniGameTypeData[miniGameTypeIdx];
-            if (miniGameType["id"] == miniGameTypeId) {
-                return miniGameTypeIdx;
+        MiniGameTypeModel.remove({_id: miniGameTypeId}, function (err, obj) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(obj);
             }
-        }
+        });
 
-        return null;
+        return deferred.promise;
+    }
+
+    function deactivateMiniGameType(miniGameTypeId) {
+        var deferred = q.defer();
+
+        MiniGameTypeModel.update({_id: miniGameTypeId}, {$set: {isActive: false}}, function (err, miniGameType) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(miniGameType);
+            }
+        });
+
+        return deferred.promise;
     }
 }

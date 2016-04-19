@@ -15,19 +15,31 @@
             })
             .when("/profile", {
                 templateUrl: "views/user/profile.view.html",
-                controller: "ProfileController"
+                controller: "ProfileController",
+                resolve: {
+                    loggedin: checkCurrentUserAndMatch
+                }
             })
             .when("/home", {
                 templateUrl: "views/home/home.view.html",
-                controller: "HomeController"
+                controller: "HomeController",
+                resolve: {
+                    loggedin: checkCurrentUserAndMatch
+                }
             })
             .when("/create", {
                 templateUrl: "views/create/create.view.html",
-                controller: "CreateController"
+                controller: "CreateController",
+                resolve: {
+                    loggedin: checkCurrentUserAndMatch
+                }
             })
             .when("/join", {
                 templateUrl: "views/join/join.view.html",
-                controller: "JoinController"
+                controller: "JoinController",
+                resolve: {
+                    loggedin: checkCurrentUserAndMatch
+                }
             })
             .when("/scores", {
                 templateUrl: "views/scores/scores.view.html",
@@ -35,7 +47,10 @@
             })
             .when("/play", {
                 templateUrl: "views/play/play.view.html",
-                controller: "PlayController"
+                controller: "PlayController",
+                resolve: {
+                    loggedin: checkCurrentUserAndMatch
+                }
             })
             .when("/match", {
                 templateUrl: "views/match/match.view.html",
@@ -57,4 +72,33 @@
                 redirectTo: "/login"
             });
     }
+
+    var checkCurrentUserAndMatch = function($q, $timeout, $http, $location, $rootScope, MatchService) {
+        var deferred = $q.defer();
+
+        $http.get("/api/project/user/loggedIn").success(function(user)
+        {
+            if (user !== '0')
+            {
+                $rootScope.currentUser = user;
+                if ($rootScope.currentUser.currentMatchId != null) {
+                    MatchService.getMatch($rootScope.currentUser.currentMatchId).then(function(response) {
+                        if (response.data) {
+                            $rootScope.currentMatch = response.data;
+                        }
+                        deferred.resolve();
+                    });
+                }
+                else {
+                    deferred.resolve();
+                }
+            }
+            else {
+                $location.path("#/");
+            }
+        });
+
+        return deferred.promise;
+    }
+
 })();

@@ -1,5 +1,8 @@
-var userData = require('./user.mock.json');
-module.exports = function() {
+var q = require("q");
+
+module.exports = function(mongoose) {
+    var UserSchema = require("./user.schema.server.js")(mongoose);
+    var UserModel = mongoose.model("UserModel", UserSchema);
 
     var api = {
         createUser: createUser,
@@ -14,70 +17,30 @@ module.exports = function() {
     return api;
 
     function createUser(user) {
-        userData.push(user);
-        return user;
+        return UserModel.create(user);
     }
 
     function getAllUsers() {
-        return userData;
+        return UserModel.find();
     }
 
     function getUser(userId) {
-        var index = findUserIndexById(userId);
-        if (index) {
-            return userData[index];
-        }
-
-        return null;
+        return UserModel.findById(userId);
     }
 
     function updateUser(userId, newUser) {
-        var index = findUserIndexById(userId);
-        if (index) {
-            userData[index] = newUser;
-            return newUser;
-        }
-        return null;
+        return UserModel.update({_id:userId},{$set:newUser});
     }
 
     function deleteUser(userId) {
-        var index = findUserIndexById(userId);
-        if (index) {
-            userData.splice(index, 1);
-        }
-        return userData;
+        return UserModel.remove({_id:userId});
     }
 
     function findUserByCredentials(credentials) {
-        for (userIdx in userData) {
-            var user = userData[userIdx];
-            if (user["password"] == credentials.password && user["username"] == credentials.username) {
-                return user;
-            }
-        }
-
-        return null;
+        return UserModel.find({username:credentials.username, password:credentials.password});
     }
 
     function findUserByUsername(username) {
-        for (userIdx in userData) {
-            var user = userData[userIdx];
-            if (user["username"] == username) {
-                return user;
-            }
-        }
-
-        return null;
-    }
-
-    function findUserIndexById(userId) {
-        for (userIdx in userData) {
-            var user = userData[userIdx];
-            if (user["id"] == userId) {
-                return userIdx;
-            }
-        }
-
-        return null;
+        return UserModel.find({username:credentials.username});
     }
 }

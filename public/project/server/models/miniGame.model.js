@@ -1,5 +1,8 @@
-var miniGameData = require('./miniGame.mock.json');
-module.exports = function() {
+var q = require("q");
+
+module.exports = function(mongoose) {
+    var MiniGameSchema = require("./miniGame.schema.server.js")(mongoose);
+    var MiniGameModel = mongoose.model("MiniGameModel", MiniGameSchema);
 
     var api = {
         createMiniGame: createMiniGame,
@@ -13,55 +16,86 @@ module.exports = function() {
     return api;
 
     function createMiniGame(miniGame) {
-        miniGameData.push(miniGame);
-        return miniGameData;
+        var deferred = q.defer();
+
+        MiniGameModel.create(miniGame, function (err, miniGame) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(miniGame);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function getAllMiniGames() {
-        return miniGameData;
+        var deferred = q.defer();
+
+        MiniGameModel.find(function (err, miniGames) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(miniGames);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function getMiniGame(miniGameId) {
-        var index = findMiniGameIndexById(miniGameId);
-        if (index) {
-            return miniGameData[index];
-        }
+        var deferred = q.defer();
 
-        return null;
+        MiniGameModel.findById(miniGameId, function (err, miniGames) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(miniGames);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function updateMiniGame(miniGameId, newMiniGame) {
-        var index = findMiniGameIndexById(miniGameId);
-        if (index) {
-            miniGameData[index] = newMiniGame;
-        }
-        return miniGameData;
+        var deferred = q.defer();
+
+        MiniGameModel.update({_id: miniGameId}, {$set: newMiniGame}, function (err, miniGame) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(miniGame);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function deleteMiniGame(miniGameId) {
-        var index = findMiniGameIndexById(miniGameId);
-        if (index) {
-            miniGameData.splice(index, 1);
-        }
-        return miniGameData;
+        var deferred = q.defer();
+
+        MiniGameModel.remove({_id: miniGameId}, function (err, obj) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(obj);
+            }
+        });
+
+        return deferred.promise;
     }
 
     function deactivateMiniGame() {
-        var index = findMiniGameIndexById(miniGameId);
-        if (index) {
-            miniGameData[index].isActive = false;
-        }
-        return miniGameData;
-    }
+        var deferred = q.defer();
 
-    function findMiniGameIndexById(miniGameId) {
-        for (miniGameIdx in miniGameData) {
-            var miniGame = miniGameData[miniGameIdx];
-            if (miniGame["id"] == miniGameId) {
-                return miniGameIdx;
+        MiniGameModel.update({_id: miniGameId}, {$set: {isActive: false}}, function (err, miniGame) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(miniGame);
             }
-        }
+        });
 
-        return null;
+        return deferred.promise;
     }
 }
