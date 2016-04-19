@@ -108,6 +108,7 @@ module.exports = function(mongoose) {
     function updateMatch(matchId, newMatch) {
         var deferred = q.defer();
 
+        delete newMatch._id;
         MatchModel.update({_id: matchId}, {$set: newMatch}, function (err, obj) {
             if (err) {
                 deferred.reject(err);

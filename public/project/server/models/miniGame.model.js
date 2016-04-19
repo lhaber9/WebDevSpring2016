@@ -52,6 +52,7 @@ module.exports = function(mongoose) {
     function updateMiniGame(miniGameId, newMiniGame) {
         var deferred = q.defer();
 
+        delete newMiniGame._id;
         MiniGameModel.update({_id: miniGameId}, {$set: newMiniGame}, function (err, miniGame) {
             if (err) {
                 deferred.reject(err);

@@ -60,6 +60,7 @@ module.exports = function(mongoose) {
     function updateMiniGameType(miniGameTypeId, newMiniGameType) {
         var deferred = q.defer();
 
+        delete newMiniGameType._id;
         MiniGameTypeModel.update({_id: miniGameTypeId}, {$set: newMiniGameType}, function (err, miniGameType) {
             if (err) {
                 deferred.reject(err);
