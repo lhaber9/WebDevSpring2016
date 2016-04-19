@@ -147,8 +147,9 @@ module.exports = function(mongoose) {
         return deferred.promise;
     }
 
-    function addUserToMatch(userId, matchId) {
+    function addUserToMatch(user, matchId) {
         var deferred = q.defer();
+        var userId = user._id;
 
         MatchModel.findById(matchId, function (err, match) {
             if (err) {

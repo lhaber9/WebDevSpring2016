@@ -29,6 +29,7 @@ module.exports = function(app, model, uuid, passport) {
                 return model.getUser(userId);
             },
             function(err) {
+                console.log(err);
                 res.status(400).send(err);
             }
         ).then(

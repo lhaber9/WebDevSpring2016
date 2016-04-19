@@ -44,9 +44,5 @@
         function isLoggedIn() {
             return $http.get("/api/project/user/loggedIn");
         }
-
-        function getScoresForMiniGame(miniGameId) {
-
-        }
     }
 })();

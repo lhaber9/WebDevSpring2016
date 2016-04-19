@@ -128,7 +128,7 @@ module.exports = function(app, model, uuid) {
     app.put('/api/project/match/:matchId/addUser', function(req, res) {
         var matchId = req.params.matchId;
         var newUser = req.body;
-        model.addUserToMatch(newUser, matchId).then(
+        model.addUserToMatch(newUser.constructor, matchId).then(
             function(match) {
                 res.json(match);
             },
