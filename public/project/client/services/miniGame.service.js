@@ -12,7 +12,8 @@
             getMiniGame:getMiniGame,
             getAllMiniGames:getAllMiniGames,
             finishMiniGame:finishMiniGame,
-            addResult:addResult
+            addResult:addResult,
+            getAllMiniGamesWonForMatchAndPlayer:getAllMiniGamesWonForMatchAndPlayer
         };
 
         return api;
@@ -37,8 +38,12 @@
             return $http.get("/api/project/miniGame");
         }
 
-        function finishMiniGame(miniGameId, winner) {
-            return $http.put("/api/project/finish/miniGame/" + miniGameId, winner);
+        function getAllMiniGamesWonForMatchAndPlayer(matchId, player) {
+            return $http.post("/api/project/miniGamesWon/" + matchId, player);
+        }
+
+        function finishMiniGame(miniGameId, winnerId) {
+            return $http.put("/api/project/finish/miniGame/" + miniGameId + "/" + winnerId);
         }
 
         function addResult(miniGameId, player, time) {

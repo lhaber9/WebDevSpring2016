@@ -1,9 +1,9 @@
 module.exports = function(mongoose) {
     var MiniGameSchema = mongoose.Schema({
         isActive: Boolean,
-        match: {type:mongoose.Schema.Types.Object, ref:'match'},
+        matchId: String,
         miniGameType: {type:mongoose.Schema.Types.Object, ref:'miniGameType'},
-        winner: {type:mongoose.Schema.Types.Object, ref:'user'},
+        winnerId: String,
         results: [{
             player:{type:mongoose.Schema.Types.Object, ref:'user'},
             time:Number

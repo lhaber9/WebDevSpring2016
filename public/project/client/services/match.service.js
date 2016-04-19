@@ -16,7 +16,8 @@
             addPlayerToMatch:addPlayerToMatch,
             removePlayerFromMatch:removePlayerFromMatch,
             startMatch:startMatch,
-            getAllActiveUnstartedMatches:getAllActiveUnstartedMatches
+            getAllActiveUnstartedMatches:getAllActiveUnstartedMatches,
+            getAllForUser:getAllForUser
         };
 
         return api;
@@ -51,6 +52,10 @@
 
         function getAllActiveUnstartedMatches() {
             return $http.get("/api/project/unstarted/match");
+        }
+
+        function getAllForUser(userId) {
+            return $http.get("/api/project/matchesForUser/" + userId);
         }
 
         function deactivateMiniGateType(matchId) {

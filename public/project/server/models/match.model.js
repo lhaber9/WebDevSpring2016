@@ -15,7 +15,8 @@ module.exports = function(mongoose) {
         addUserToMatch:addUserToMatch,
         removeUserFromMatch:removeUserFromMatch,
         startMatch:startMatch,
-        getAllActiveUnstartedMatches: getAllActiveUnstartedMatches
+        getAllActiveUnstartedMatches: getAllActiveUnstartedMatches,
+        getAllMatchesForUser: getAllMatchesForUser
     };
 
     return api;
@@ -189,5 +190,9 @@ module.exports = function(mongoose) {
         });
 
         return deferred.promise;
+    }
+
+    function getAllMatchesForUser(userId) {
+        return MatchModel.find({players: userId});
     }
 }

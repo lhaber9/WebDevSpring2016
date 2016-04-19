@@ -1,0 +1,22 @@
+<h2>Scores</h2>
+<a href="#/home">Go Back</a>
+
+<style>
+    .highlighted {
+        background-color: lightblue;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xs-4">
+        <div ng-repeat="match in matches">
+            <h4 ng-click="selectMatch(match)" class="btn btn-link">{{match.name}}</h4>
+        </div>
+    </div>
+    <div class="col-xs-8">
+        <h3>Scores for {{match.name}}</h3>
+        <h4 ng-repeat="score in scores" ng-class="{highlighted: score.player._id == $rootScope.currentUser._id}">{{score.player.username}} won {{score.gamesWon}} mini-games</h4>
+    </div>
+</div>
+
+

@@ -43,7 +43,17 @@
             })
             .when("/scores", {
                 templateUrl: "views/scores/scores.view.html",
-                controller: "ScoresController"
+                controller: "ScoresController",
+                resolve: {
+                    loggedin: checkCurrentUserAndMatch
+                }
+            })
+            .when("/scoresList", {
+                templateUrl: "views/scores/scoresList.view.html",
+                controller: "ScoresListController",
+                resolve: {
+                    loggedin: checkCurrentUserAndMatch
+                }
             })
             .when("/play", {
                 templateUrl: "views/play/play.view.html",

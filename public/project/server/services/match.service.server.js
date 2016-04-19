@@ -150,4 +150,18 @@ module.exports = function(app, model, uuid) {
             }
         );
     });
+
+
+    app.get('/api/project/matchesForUser/:userId', function(req, res) {
+        var userId = req.params.userId;
+        model.getAllMatchesForUser(userId).then(
+            function(miniGames) {
+                res.json(miniGames);
+            },
+            function(err) {
+                res.status(400).send(err);
+            }
+        );
+    });
+
 }

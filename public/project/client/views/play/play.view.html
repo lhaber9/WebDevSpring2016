@@ -19,12 +19,16 @@
                 <h4 ng-show="miniGameStartTime != null">Waiting for everyone else to finish!</h4>
                 <div ng-show="miniGameStartTime == null">
 
+                    <h3 ng-show="$rootScope.currentMiniGame.winnerId == $rootScope.currentUser._id">You Won This Round!</h3>
+                    <h3 ng-show="$rootScope.currentMiniGame.winnerId != $rootScope.currentUser._id">Better Luck Next Time</h3>
+
                     <h3>Results</h3>
                     <h5 ng-repeat="result in $rootScope.currentMiniGame.results">
                         {{result.player.username}} took {{result.time / 1000}} seconds
                     </h5>
 
                     <button ng-click="startMiniGame()" ng-hide="!isAdmin">Start Next Round</button>
+                    <button ng-click="endMatch()" ng-hide="!isAdmin">End Match</button>
                 </div>
             </div>
         </div>

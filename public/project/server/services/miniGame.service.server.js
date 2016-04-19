@@ -83,10 +83,23 @@ module.exports = function(app, model, uuid) {
         );
     });
 
-    app.put('/api/project/finish/miniGame/:miniGameId', function(req, res) {
+    app.post('/api/project/miniGamesWon/:matchId', function(req, res) {
+        var matchId = req.params.matchId;
+        var player = req.body;
+        model.getAllMiniGamesWonForMatchAndPlayer(matchId, player._id).then(
+            function(miniGames) {
+                res.json({miniGames: miniGames, player: player});
+            },
+            function(err) {
+                res.status(400).send(err);
+            }
+        );
+    });
+
+    app.put('/api/project/finish/miniGame/:miniGameId/:winningPlayerId', function(req, res) {
         var miniGameId = req.params.miniGameId;
-        var winningPlayer = req.body;
-        model.finishMiniGame(miniGameId, winningPlayer).then(
+        var winningPlayerId = req.params.winningPlayerId;
+        model.finishMiniGame(miniGameId, winningPlayerId).then(
             function(miniGame) {
                 res.json(miniGame);
             },

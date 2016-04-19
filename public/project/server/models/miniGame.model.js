@@ -11,7 +11,8 @@ module.exports = function(mongoose) {
         getMiniGame: getMiniGame,
         getAllMiniGames: getAllMiniGames,
         finishMiniGame: finishMiniGame,
-        addResult: addResult
+        addResult: addResult,
+        getAllMiniGamesWonForMatchAndPlayer:getAllMiniGamesWonForMatchAndPlayer
     };
 
     return api;
@@ -90,10 +91,10 @@ module.exports = function(mongoose) {
         return deferred.promise;
     }
 
-    function finishMiniGame(miniGameId, winningPlayer) {
+    function finishMiniGame(miniGameId, winningPlayerId) {
         var deferred = q.defer();
 
-        MiniGameModel.update({_id: miniGameId}, {$set: {isActive: false, winner: winningPlayer}}, function (err, miniGame) {
+        MiniGameModel.update({_id: miniGameId}, {$set: {isActive: false, winnerId: winningPlayerId}}, function (err, miniGame) {
             if (err) {
                 deferred.reject(err);
             } else {
@@ -102,5 +103,9 @@ module.exports = function(mongoose) {
         });
 
         return deferred.promise;
+    }
+
+    function getAllMiniGamesWonForMatchAndPlayer(matchId, playerId) {
+       return MiniGameModel.find({matchId: matchId, winnerId: playerId});
     }
 }
