@@ -3,7 +3,7 @@
         .module("ProjectApp")
         .controller("JoinController", JoinController);
 
-    function JoinController($scope, $location, $rootScope, MatchService, UserService) {
+    function JoinController($scope, $location, $rootScope, MatchService, UserService, PubNubService) {
 
         MatchService.getAllActiveUnstartedMatches().then(function(response) {
             console.log(response);
@@ -21,6 +21,7 @@
                 }
                 UserService.updateUser($rootScope.currentUser._id, $rootScope.currentUser).then(function(response){
                     $location.path('play');
+                    PubNubService.publish({action:"joinedGame", player:$rootScope.currentUser}, $rootScope.currentMatch._id);
                 });
             });
         }

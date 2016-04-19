@@ -116,10 +116,17 @@ module.exports = function(app, model, uuid) {
         var matchId = req.params.matchId;
         model.deactivateMatch(matchId).then(
             function(match) {
-                res.json(match);
+                return model.getMatch(matchId);
             },
             function(err) {
                 console.log(err);
+                res.status(400).send(err);
+            }
+        ).then(
+            function(match) {
+                res.json(match);
+            },
+            function(err) {
                 res.status(400).send(err);
             }
         );
@@ -128,7 +135,14 @@ module.exports = function(app, model, uuid) {
     app.put('/api/project/match/:matchId/addUser', function(req, res) {
         var matchId = req.params.matchId;
         var newUser = req.body;
-        model.addUserToMatch(newUser.constructor, matchId).then(
+        model.addUserToMatch(newUser, matchId).then(
+            function(obj) {
+                return model.getMatch(matchId);
+            },
+            function(err) {
+                res.status(400).send(err);
+            }
+        ).then(
             function(match) {
                 res.json(match);
             },
@@ -142,6 +156,13 @@ module.exports = function(app, model, uuid) {
         var matchId = req.params.matchId;
         var userId = req.params.userId;
         model.removeUserFromMatch(userId, matchId).then(
+            function(obj) {
+                return model.getMatch(matchId);
+            },
+            function(err) {
+                res.status(400).send(err);
+            }
+        ).then(
             function(match) {
                 res.json(match);
             },
@@ -150,7 +171,6 @@ module.exports = function(app, model, uuid) {
             }
         );
     });
-
 
     app.get('/api/project/matchesForUser/:userId', function(req, res) {
         var userId = req.params.userId;

@@ -7,7 +7,10 @@
         $scope.backToHome = backToHome;
         $scope.$rootScope = $rootScope;
 
-        var playerIds = $rootScope.currentMatch.players;
+        var playerIds = [];
+        if ($rootScope.currentMatch.players) {
+            playerIds = $rootScope.currentMatch.players;
+        }
 
         $scope.scores = [];
 

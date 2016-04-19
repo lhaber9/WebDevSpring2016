@@ -92,17 +92,7 @@ module.exports = function(mongoose) {
     }
 
     function getMatch(matchId) {
-        var deferred = q.defer();
-
-        MatchModel.findById(matchId,function (err, match) {
-            if (err) {
-                deferred.reject(err);
-            } else {
-                deferred.resolve(match);
-            }
-        });
-
-        return deferred.promise;
+        return MatchModel.findById(matchId)
     }
 
     function updateMatch(matchId, newMatch) {

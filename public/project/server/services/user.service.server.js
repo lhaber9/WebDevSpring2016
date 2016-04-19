@@ -6,7 +6,6 @@ module.exports = function(app, model, uuid, passport) {
     });
 
     app.get('/api/project/user/loggedIn', function(req, res) {
-        console.log("checking logged in");
         res.send(req.isAuthenticated() ? req.user : '0');
     });
 
@@ -23,7 +22,6 @@ module.exports = function(app, model, uuid, passport) {
     });
 
     app.put('/api/project/:userId/user', function(req, res) {
-        console.log("Updating User");
         var userId = req.params.userId;
         var newUser = req.body;
         model.updateUser(userId, newUser).then(

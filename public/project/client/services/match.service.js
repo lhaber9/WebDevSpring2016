@@ -66,8 +66,8 @@
             return $http.put("/api/project/match/" + matchId + "/addUser", user);
         }
 
-        function removePlayerFromMatch(userId, matchId) {
-            return $http.put("/api/project/match/" + matchId + "/removeUser/" + userId);
+        function removePlayerFromMatch(user, matchId) {
+            return $http.put("/api/project/match/" + matchId + "/removeUser/" + user._id);
         }
     }
 })();
