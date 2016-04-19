@@ -164,6 +164,9 @@ module.exports = function(mongoose) {
                         }
                     });
                 }
+                else {
+                    deferred.resolve(match);
+                }
             }
         });
 
