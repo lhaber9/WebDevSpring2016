@@ -23,6 +23,14 @@
 
         console.log($rootScope.currentMatch);
 
+        $scope.$on('tapLeaveMatch', function(event, args) {
+            $scope.leaveGame();
+        });
+
+        $scope.$on('tapEndMatch', function(event, args) {
+            $scope.endMatch();
+        });
+
         PubNubService.subscribe($rootScope.currentMatch._id, function(payload) {
             console.log("NEW PUBNUB:");
             console.log(payload);
@@ -125,6 +133,10 @@
 
         function endMatch() {
             PubNubService.publish({action:"matchEnded"}, $rootScope.currentMatch._id);
+            $scope.currentMatch.isActive = false;
+            MatchService.updateMatch($scope.currentMatch._id, $scope.currentMatch).then(function(response) {
+                $rootScope.currentMatch = null;
+            });
         }
 
         function leaveGame() {

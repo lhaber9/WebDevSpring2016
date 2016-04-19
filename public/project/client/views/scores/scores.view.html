@@ -4,11 +4,12 @@
     }
 </style>
 
-<div class="col-xs-4 col-xs-offset-4">
+<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
 
-    <h3>Scores</h3>
-    <span ng-repeat="score in scores" ng-class="{highlighted: score.player._id == $rootScope.currentUser._id}">{{score.player.username}} won {{score.gamesWon}} mini-games</span>
-
+    <h3>Scores for {{$rootScope.currentMatch.name}}</h3>
+    <div>
+        <h4 ng-repeat="score in scores" ng-class="{highlighted: score.player._id == $rootScope.currentUser._id}">{{score.player.username}} won {{score.gamesWon}} mini-games</h4>
+    </div>
 
     <button ng-click="backToHome()">Back To Home</button>
 </div>

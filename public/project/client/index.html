@@ -17,6 +17,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/simple-sidebar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="/css/style.css" rel="stylesheet">
@@ -43,6 +44,7 @@
     <script src="views/user/signup.controller.js"></script>
     <script src="views/user/login.controller.js"></script>
     <script src="views/user/profile.controller.js"></script>
+    <script src="views/sidebar/sidebar.controller.js"></script>
 
     <script src="views/match/match.controller.js"></script>
     <script src="views/miniGame/miniGame.controller.js"></script>
@@ -51,9 +53,17 @@
 </head>
 <body ng-controller="MainController">
 
-<div class="container-fluid">
-    <div class="row">
-        <div ng-view class="main"></div>
+<div id="wrapper">
+
+    <div id="sidebar-wrapper" ng-include="'views/sidebar/sidebar.view.html'"></div>
+
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <button ng-click="toggleMenu()">Toggle</button>
+                <div ng-view class="main col-xs-12"></div>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -1,0 +1,9 @@
+<div ng-controller="SidebarController">
+    <ul class="sidebar-nav">
+        <li ng-show="showHome()" ng-class="{'active' : $location.url() == '/home'}"><a href="#/home">Home</a></li>
+        <li ng-show="showProfile()" ng-class="{'active' : $location.url() == '/profile'}"><a href="#/profile">Profile</a></li>
+        <li ng-show="showScoresList()" ng-class="{'active' : $location.url() == '/scoresList'}"><a href="#/scoresList">My Scores</a></li>
+        <li ng-show="$location.url() == '/play' && $rootScope.currentMatch.matchAdmin._id != $rootScope.currentUser._id"><a ng-click="clickLeave()">Leave Game</a></li>
+        <li ng-show="$location.url() == '/play' && $rootScope.currentMatch.matchAdmin._id == $rootScope.currentUser._id"><a ng-click="clickEnd()">End Game</a></li>
+    </ul>
+</div>

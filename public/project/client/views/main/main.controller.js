@@ -5,7 +5,11 @@
 
     function MainController($location, $scope, $rootScope, UserService, MatchService) {
         $scope.$location = $location;
+        $scope.toggleMenu = toggleMenu;
 
+        function toggleMenu() {
+            $("#wrapper").toggleClass("toggled");
+        }
         //UserService.isLoggedIn().then(function(response) {
         //    if (response.data == '0') {
         //        $location.path('#/');

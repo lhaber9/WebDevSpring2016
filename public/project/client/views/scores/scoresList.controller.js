@@ -6,11 +6,15 @@
     function ScoresListController($scope, $rootScope, $location, MatchService, MiniGameService, UserService) {
 
         $scope.selectMatch = selectMatch;
+        $scope.filterMatches = filterMatches;
+
+        $scope.filterText = "";
 
         MatchService.getAllForUser($rootScope.currentUser._id).then(function(response){
             if (response.data) {
-                $scope.matches = response.data;
+                $scope.allMatches = response.data;
             }
+            filterMatches();
         });
 
         function selectMatch(match) {
@@ -34,6 +38,18 @@
                     }
                 });
             }
+        }
+
+        function filterMatches() {
+            $scope.matches = $scope.allMatches.filter(function(match) {
+                if ($scope.filterText == "") {
+                    return true
+                }
+                else if (match.name.indexOf($scope.filterText) > -1) {
+                    return true
+                }
+                return false
+            });
         }
     }
 
