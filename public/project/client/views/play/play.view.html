@@ -1,3 +1,9 @@
+<style>
+    .highlighted {
+        background-color: lightblue;
+    }
+</style>
+
 <div class="row">
 <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
     <div class="row" ng-hide="isAdmin || $rootScope.currentMatch.isStarted">
@@ -26,7 +32,7 @@
                     <h3 ng-show="$rootScope.currentMiniGame.winnerId != $rootScope.currentUser._id">Better Luck Next Time</h3>
 
                     <h3>Results</h3>
-                    <h5 ng-repeat="result in $rootScope.currentMiniGame.results">
+                    <h5 ng-repeat="result in $rootScope.currentMiniGame.results" ng-class="{highlighted: result.player._id == $rootScope.currentUser._id}">
                         {{result.player.username}} took {{result.time / 1000}} seconds
                     </h5>
 
