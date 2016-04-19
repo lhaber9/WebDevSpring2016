@@ -21,7 +21,7 @@ module.exports = function(app, model, uuid, passport) {
         );
     });
 
-    app.put('/api/project/user/:userId', function(req, res) {
+    app.put('/api/project/:userId/user', function(req, res) {
         var userId = req.params.userId;
         var newUser = req.body;
         model.updateUser(userId, newUser).then(
