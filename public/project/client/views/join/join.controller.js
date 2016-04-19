@@ -19,9 +19,10 @@
                 if (response.data) {
                     $rootScope.currentMatch = response.data;
                 }
-                $location.path('play');
+                UserService.updateUser($rootScope.currentUser._id, $rootScope.currentUser).then(function(response){
+                    $location.path('play');
+                });
             });
-            UserService.updateUser($rootScope.currentUser._id, $rootScope.currentUser);
         }
     }
 })();
