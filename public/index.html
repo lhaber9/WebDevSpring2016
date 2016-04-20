@@ -7,35 +7,125 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
+
+  <!-- Plugin CSS -->
+  <link rel="stylesheet" href="css/animate.min.css" type="text/css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/creative.css" type="text/css">
 </head>
 
-<body>
+<body id="page-top">
 
+  <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand page-scroll" href="#page-top">Luke's Site</a>
+      </div>
 
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/">Luke's Page</a>
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li>
+            <a class="page-scroll" href="#about">About</a>
+          </li>
+          <li>
+            <a class="page-scroll" href="#assignments">Assignments</a>
+          </li>
+        </ul>
+      </div>
+      <!-- /.navbar-collapse -->
     </div>
+    <!-- /.container-fluid -->
+  </nav>
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="divider-vertical"></li>
-        <li><a href="/project/client">Project Page</a></li>
-        <li><a href="/assignment/client">Ongoing Homework Page</a></li>
-        <li><a href="https://github.com/lhaber9/WebDevSpring2016">Github Page</a></li>
-        <li><a href="https://youtu.be/oSoJm1HnjyM">Demo Video</a></li>
-      </ul>
+  <header>
+    <div class="header-content">
+      <div class="header-content-inner">
+        <h1>Luke's Web Dev Site</h1>
+        <hr>
+        <p>Welcome to my awesome site for Web Development Sprin 2016 with Jose Annunziato!</p>
+        <a href="#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a>
+      </div>
     </div>
-  </div>
-</nav>
+  </header>
 
+  <section class="bg-primary" id="about">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-8 col-xs-offset-2 col-lg-5 col-lg-offset-2 text-center">
+          <h2 class="section-heading">Hello!</h2>
+          <hr class="light">
+          <p class="text-faded">My name is Lucas Haber, im a Senior Computer Science and Interactive Media combined major.</p>
+          <a href="#assignments" class="btn btn-default btn-xl">Get Started!</a>
+          <div style="height:35px"></div>
+        </div>
+        <div class="col-xs-4 col-xs-offset-4 col-lg-3 col-lg-offset-0" >
+          <div id="image-container"><img src="img/my_picture.jpg" width="100%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-dark" id="assignments">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-3 col-md-6 text-center p">
+          <h2 class="section-heading">Ongoing Homework</h2>
+          <hr class="light">
+          <p class="text-faded">This is the link to my forms application homework page</p>
+          <a href="/assignment/client" class="btn btn-default btn-xl">Go!</a>
+          <div style="height:35px"></div>
+        </div>
+        <div class="col-lg-3 col-md-6 text-center">
+          <h2 class="section-heading">Github Page</h2>
+          <hr class="light">
+          <p class="text-faded">This is the link to my github page</p>
+          <a href="https://github.com/lhaber9/WebDevSpring2016" class="btn btn-default btn-xl">Go!</a>
+          <div style="height:35px"></div>
+        </div>
+        <div class="col-lg-3 col-md-6 text-center">
+          <h2 class="section-heading">Project</h2>
+          <hr class="light">
+          <p class="text-faded">This is the link to my project page. Users create games which other users can join.</p>
+          <a href="/project/client" class="btn btn-default btn-xl">Go!</a>
+          <div style="height:35px"></div>
+        </div>
+        <div class="col-lg-3 col-md-6 text-center">
+          <h2 class="section-heading">Project Demo Video</h2>
+          <hr class="light">
+          <p class="text-faded">This is the a video demoing my projecet</p>
+          <a href="https://youtu.be/oSoJm1HnjyM" class="btn btn-default btn-xl">Go!</a>
+          <div style="height:35px"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--<section id="links">-->
+    <!--<div class="container">-->
+      <!--Links-->
+    <!--</div>-->
+  <!--</section>-->
+
+  <!-- Plugin JavaScript -->
+  <script src="js/jquery.easing.min.js"></script>
+  <script src="js/jquery.fittext.js"></script>
+  <script src="js/wow.min.js"></script>
+
+  <!-- Custom Theme JavaScript -->
+  <script src="js/creative.js"></script>
 
 </body>
 </html>
