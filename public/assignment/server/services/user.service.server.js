@@ -20,9 +20,8 @@ module.exports = function(app, model, passport) {
         res.json(user);
     });
 
-    app.get('/api/assignment/loggedin', function(req, res)
-    {
-        res.send(req.isAuthenticated() ? req.body : '0');
+    app.get('/api/assignment/loggedIn', function(req, res) {
+        res.send(req.isAuthenticated() ? req.user : '0');
     });
 
     app.post('/api/assignment/logout', function(req, res)
