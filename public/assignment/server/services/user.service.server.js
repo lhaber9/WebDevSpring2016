@@ -202,6 +202,24 @@ module.exports = function(app, model, passport) {
         });
     });
 
+    app.get('/api/assignment/setAdmin/user/:username', function (req, res) {
+
+        var username = req.params.username;
+
+        model.findOne({username: username}, function(err, user) {
+            user.roles = ["admin"];
+            user.save(function(err, count) {
+                if (err != null) {
+                    res.status(400).send(err);
+                }
+                else {
+                    res.send(count);
+                }
+            });
+        });
+
+    });
+
     function isUserAdmin(username, password, callback) {
         model.findOne({username: username, password: password}, function(err, foundUser) {
             if (err != null) {
