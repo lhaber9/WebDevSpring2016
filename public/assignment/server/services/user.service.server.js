@@ -188,6 +188,7 @@ module.exports = function(app, model, passport) {
                 var user = req.body;
 
                 model.findById(userId, function(err, foundUser) {
+                    delete user._id;
                     foundUser.update(user, function(err, count) {
                         if (err != null) {
                             console.log("Error: " + err);
