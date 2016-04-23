@@ -190,6 +190,7 @@ module.exports = function(app, model, passport) {
                 model.findById(userId, function(err, foundUser) {
                     foundUser.update(user, function(err, count) {
                         if (err != null) {
+                            console.log("Error: " + err);
                             res.status(400).send(err);
                         }
                         else {
