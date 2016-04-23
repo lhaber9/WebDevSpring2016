@@ -49,6 +49,7 @@
             validateEditingUser();
 
             AdminService.updateUser($scope.editingUser._id, $scope.editingUser).then(function(response) {
+                console.log(response);
                 $scope.editingUser = {};
                 $scope.updateUsers();
             });
