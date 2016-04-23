@@ -12,39 +12,21 @@
         </thead>
         <tbody>
             <tr>
-                <td><input type="text" name="username" id="username" placeholder="username"></td>
-                <td><input type="password" name="password" id="password" placeholder="password"></td>
-                <td><input type="text" name="roles" id="roles" placeholder="role1, role2"></td>
+                <td><input ng-model="editingUser.username" type="text" name="username" id="username" placeholder="username"></td>
+                <td><input ng-model="editingUser.password" type="password" name="password" id="password" placeholder="password"></td>
+                <td><input ng-model="editingUser.rolesString" type="text" name="roles" id="roles" placeholder="role1, role2"></td>
                 <td>
-                    <span class="glyphicon glyphicon-plus fa-2x"></span>
-                    <span class="glyphicon glyphicon-ok fa-2x"></span>
+                    <span class="glyphicon glyphicon-plus fa-2x" ng-click="createUser()" ></span>
+                    <span class="glyphicon glyphicon-ok fa-2x" ng-click="saveUser()" ></span>
                 </td>
             </tr>
-            <tr>
-                <td>alice</td>
-                <td></td>
-                <td>student</td>
+            <tr ng-repeat="user in users">
+                <td>{{user.username}}</td>
+                <td>{{user.password}}</td>
+                <td>{{user.roles.join(",")}}</td>
                 <td>
-                    <span class="glyphicon glyphicon-remove fa-2x"></span>
-                    <span class="glyphicon glyphicon-pencil fa-2x"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>bob</td>
-                <td></td>
-                <td>faculty | admin</td>
-                <td>
-                    <span class="glyphicon glyphicon-remove fa-2x"></span>
-                    <span class="glyphicon glyphicon-pencil fa-2x"></span>
-                </td>
-            </tr>
-            <tr>
-                <td>charlie</td>
-                <td></td>
-                <td></td>
-                <td>
-                    <span class="glyphicon glyphicon-remove fa-2x"></span>
-                    <span class="glyphicon glyphicon-pencil fa-2x"></span>
+                    <span class="glyphicon glyphicon-remove fa-2x" ng-click="deleteUser(user)"></span>
+                    <span class="glyphicon glyphicon-pencil fa-2x" ng-click="selectUser(user)"></span>
                 </td>
             </tr>
         </tbody>

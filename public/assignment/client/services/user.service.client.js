@@ -13,7 +13,8 @@
             findUserByUsername:findUserByUsername,
             findAllUsers:findAllUsers,
             isLoggedIn:isLoggedIn,
-            logout:logout
+            logout:logout,
+            login:login
         };
 
         return api;
@@ -48,6 +49,10 @@
 
         function logout(user) {
             return $http.put("/api/assignment/logout", user);
+        }
+
+        function login(user) {
+            return $http.post("/api/assignment/login", user);
         }
     }
 })();
